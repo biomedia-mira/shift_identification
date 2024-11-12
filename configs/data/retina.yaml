@@ -1,0 +1,8 @@
+defaults:
+  - base.yaml
+  - _self_
+_target_: data_handling.retina.RetinaDataModule
+dataset: retina
+num_workers: 12
+input_channels: 3
+cache: True
