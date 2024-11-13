@@ -1,6 +1,6 @@
 # Automatic dataset shift identification to support root cause analysis of AI performance drift
 
-This repository contains the code associated with the paper 'Automatic dataset shift identification to support root cause analysis of AI performance drift'. 
+This repository contains the code associated with the paper [Automatic dataset shift identification to support root cause analysis of AI performance drift](https://arxiv.org/abs/2411.07940). 
 
 ## Overview
 The code is divided into the following main folders:
