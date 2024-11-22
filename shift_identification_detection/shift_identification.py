@@ -5,10 +5,10 @@ import torch
 from tqdm.autonotebook import tqdm
 
 import pandas as pd
-from shift_identification.mmd_test import run_mmd_permutation_test
-from shift_identification.prevalence_shift_adaptation import get_cpmcn_probabilities
+from shift_identification_detection.mmd_test import run_mmd_permutation_test
+from shift_identification_detection.prevalence_shift_adaptation import get_cpmcn_probabilities
 from sklearn.decomposition import PCA
-from shift_identification.bbsd_tests import run_bbsd
+from shift_identification_detection.bbsd_tests import run_bbsd
 
 ALL_SHIFTS = [
     "prevalence",
@@ -71,7 +71,6 @@ def run_shift_identification(
     num_classes=2,
     alpha=0.05,
     is_embed=False,
-    run_mmd_on_early_feats=False,
 ):
     """
     Runs one iteration shift identification/detection tests for a fixed reference and test set.
@@ -92,10 +91,8 @@ def run_shift_identification(
     y_val = y_val[val_idx]
     encoder_feats_test = encoder_output["test"]["feats"][idx_shifted]
     probas_test = task_output["test"]["probas"][idx_shifted] + 1e-16
-    if run_mmd_on_early_feats:
-        encoder_early_feats_val = encoder_output["val"]["early_feats"][val_idx]
-        encoder_early_feats_test = encoder_output["test"]["early_feats"][idx_shifted]
-
+    assert task_output["test"]["probas"].shape[0] == encoder_output["test"]["feats"].shape[0]
+    assert task_output["val"]["probas"].shape[0] == encoder_output["val"]["feats"].shape[0]
     n_val = encoder_feats_val.shape[0]
 
     # Run BBSD
@@ -142,7 +139,6 @@ def run_shift_identification(
     print(f"Took {time.time() - t1} for resampling")
 
     n_val = encoder_feats_val[idx].shape[0]
-
     # Run BBSD resampled
     resampled_bbsd_is_significant, resampled_bbsd_pvalue = run_bbsd(
         probas_val[idx], probas_test, alpha=alpha, return_p_value=True
@@ -162,10 +158,6 @@ def run_shift_identification(
         bbsd_pvalue < alph_bonferonni
     )
 
-    duo_resampled_is_significant = (mmd_resample_pvalue < alph_bonferonni) or np.any(
-        resampled_bbsd_pvalue < alph_bonferonni
-    )
-
     result = {
         "bbsd_is_significant": bbsd_is_significant,
         "mmd_pvalue": mmd_pvalue,
@@ -180,38 +172,7 @@ def run_shift_identification(
             resampled_bbsd_is_significant,
             mmd_resample_is_significant,
         ),
-        # TODO clean up
-        "detected_muks_classifier": get_type(
-            bbsd_is_significant, resampled_bbsd_is_significant
-        ),
-        "detected_mmd_pca": get_type(mmd_pvalue < alpha, mmd_resample_pvalue < alpha),
-        "detected_duo_mmd": get_type(duo_is_significant, duo_resampled_is_significant),
     }
-
-    # TODO remove if unused
-    if run_mmd_on_early_feats:
-        earlyfeats32pca = pca.fit_transform(
-            torch.concatenate([encoder_early_feats_val, encoder_early_feats_test])
-        )
-        mmd_early_feats_pvalue = run_mmd_permutation_test(
-            earlyfeats32pca[:n_val],
-            earlyfeats32pca[n_val:],
-            structure_permutation_fn=embed_patient_permutations if is_embed else None,
-        )
-
-        mmd_resample_pvalue_early_feats = run_mmd_permutation_test(
-            earlyfeats32pca[idx],
-            earlyfeats32pca[idx_test],
-            structure_permutation_fn=embed_patient_permutations if is_embed else None,
-        )
-
-        result["mmd_early_significant"] = mmd_early_feats_pvalue < alpha
-        result["mmd_early_resampled_significant"] = (
-            mmd_resample_pvalue_early_feats < alpha
-        )
-        result["detected_mmd_pca_early_feats"] = get_type(
-            mmd_early_feats_pvalue < alpha, mmd_resample_pvalue_early_feats < alpha
-        )
 
     return result
 

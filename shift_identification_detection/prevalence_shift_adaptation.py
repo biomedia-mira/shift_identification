@@ -1,6 +1,6 @@
 from scipy.optimize import minimize
 import torch
-from shift_identification.temperature_scaling import VectorScaling
+from shift_identification_detection.temperature_scaling import VectorScaling
 import numpy as np
 from abstention.calibration import inverse_softmax
 

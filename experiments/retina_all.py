@@ -2,7 +2,7 @@ import pandas as pd
 from pathlib import Path
 
 from experiments.inference_utils import get_or_save_outputs, get_ids_from_model_names
-from shift_identification.shift_identification import (
+from shift_identification_detection.shift_identification import (
     run_multi_detection_identification,
     ALL_SHIFTS,
 )

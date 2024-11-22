@@ -171,3 +171,4 @@ outputs/
 outputs2/
 pretrained_models/
 *.pth
+.DS_Store
