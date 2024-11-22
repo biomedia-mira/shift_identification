@@ -14,7 +14,7 @@ The code is divided into the following main folders:
 ## Pre-requisites
 
 ### Pip requirements
-All required python packages are listed in [requirements.txt](requirements.txt). Please install with pip.
+All required python packages are listed in [requirements.txt](requirements.txt). Please install with pip (this should take less than 5 minutes).
 
 ### Datasets
 
