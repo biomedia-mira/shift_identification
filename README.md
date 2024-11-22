@@ -50,10 +50,10 @@ The main shift identification pipeline function can be found in [shift_identific
 This function runs one iteration shift identification/detection tests for a fixed reference and test set. 
 It takes the following arguments:
 ```
-  task_output: output dict for task model.
-  encoder_output: output dict for encoder
-  idx_shifted: which indices of the test split form sampled the target set
-  val_idx: which indices of the val split for the current reference set
-  num_classes: num classes
-  alpha: significance level for the statistical teststakes the following arguments
+  task_output: output dict for task model. Should have two key 'val' and 'test' containing the results on the full validation (reference) and test sets. task_output['val'] should be a dictionary with at least a field 'y' with the ground truth, and 'probas' for the predicted probability by the task model. task_output['test'] should be a dictionary with a field 'probas' for the probability predicted by the model on the test set.
+  encoder_output: output dict for encoder. Should have two key 'val' and 'test' containing the results on the full validation (reference) and test sets. encoder_output[<split_name>] should be a dictionary with a key 'feats' containing the extracted features for each image in the set.
+  idx_shifted: which indices of the test split form sampled the target set. If the full test set should be considered as the test set, simply use np.arange(test_set_size).
+  val_idx: which indices of the val split should be used for the current reference set, if the full validation set should be used for the reference set, simply use np.arange(val_set_size).
+  num_classes: num classes in the task model, defaults to 2.
+  alpha: defaults to 0.05, significance level for the statistical tests.
 ```
