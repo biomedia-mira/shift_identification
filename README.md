@@ -47,3 +47,13 @@ Here we detail the full workflow to reproduce all shift identification results f
 
 ## Main shift identification pipeline function
 The main shift identification pipeline function can be found in [shift_identification/shift_identification.py](shift_identification/shift_identification.py) in the `run_shift_identification` function.
+This function runs one iteration shift identification/detection tests for a fixed reference and test set. 
+It takes the following arguments:
+```
+  task_output: output dict for task model.
+  encoder_output: output dict for encoder
+  idx_shifted: which indices of the test split form sampled the target set
+  val_idx: which indices of the val split for the current reference set
+  num_classes: num classes
+  alpha: significance level for the statistical teststakes the following arguments
+```
