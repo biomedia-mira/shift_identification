@@ -39,11 +39,12 @@ Once you have downloaded the datasets, please update the corresponding paths at 
 Here we detail the full workflow to reproduce all shift identification results for the mammography dataset. 
 1. Train the task model with `python classification/train.py experiment=base_density`. This should only take a couple of hours to train (on a single GPU).
 2. Train the self-supervised encoder with `python classification/train.py experiment=simclr_embed`. This is optional, only if you want to reproduce the detection results with the SimCLR Modality Specific encoder. If you just want to run shift identification this is not necessary. It takes a couple of days to train.
-3. Run inference and shift detection experiment with `python experiments/mammo_all.py --encoder_type={ENCODER} --shift={SHIFT}`.
+3. For the pretrained SimCLR ImageNet encoder, you can download the weights at [https://github.com/AndrewAtanov/simclr-pytorch](https://github.com/AndrewAtanov/simclr-pytorch)
+4. Run inference and shift detection experiment with `python experiments/mammo_all.py --encoder_type={ENCODER} --shift={SHIFT}`.
     * `ENCODER` should specify which encoder to use for the MMD / Duo / shift identification test. It can take values `random` (random ResNet50 encoder), `imagenet` (ResNet50 with ImageNet weights, supervised pretraining), `simclr_imagenet` (ResNet50 SimCLR pretraining on ImageNet), `simclr_modality_specific` (ResNet50 pretraining on the modality i.e. point 2), `model` (encoder from classification task model). 
     * `SHIFT` can take values `prevalence`, `acquisition` `gender`, `acquisition_prev`, `gender_prev`, `no_shift`, `all`. Defaults to `all`.
     * For each tested shift scenario, this script will save detection outputs for each bootstrap sample in a csv (one csv per shift). Running the identification experiments for all tested shifts should take a couple of hours (with 200 bootstrap samples).
-4. Plot the results with `plot_all_results.ipynb`
+5. Plot the results with `plot_all_results.ipynb`
 
 ## Main shift identification pipeline function
 The main shift identification pipeline function can be found in [shift_identification/shift_identification.py](shift_identification/shift_identification.py) in the `run_shift_identification` function.
