@@ -35,7 +35,7 @@ For every dataset we provide our train/test/split generation code to ensure repr
 #### Update dataset paths
 Once you have downloaded the datasets, please update the corresponding paths at the top of the `mammo.py` and `xray.py` and `retina.py` files.
 
-## Shift identification - Workflow example
+## Shift identification - Workflow example to reproduce paper experiments
 Here we detail the full workflow to reproduce all shift identification results for the mammography dataset. 
 1. Train the task model with `python classification/train.py experiment=base_density`. This should only take a couple of hours to train (on a single GPU).
 2. Train the self-supervised encoder with `python classification/train.py experiment=simclr_embed`. This is optional, only if you want to reproduce the detection results with the SimCLR Modality Specific encoder. If you just want to run shift identification this is not necessary. It takes a couple of days to train.
@@ -47,7 +47,7 @@ Here we detail the full workflow to reproduce all shift identification results f
 5. Plot the results with `plot_all_results.ipynb`
 
 ## Main shift identification pipeline function
-The main shift identification pipeline function can be found in [shift_identification/shift_identification.py](shift_identification/shift_identification.py) in the `run_shift_identification` function.
+The main shift identification pipeline function can be found in [shift_identification_detection/shift_identification.py](shift_identification/shift_identification.py) in the `run_shift_identification` function.
 This function runs one iteration shift identification/detection tests for a fixed reference and test set. 
 It takes the following arguments:
 ```
@@ -59,3 +59,4 @@ Args:
    - num_classes: num classes in the task model, defaults to 2.
    - alpha: defaults to 0.05, significance level for the statistical tests.
 ```
+A demo on how to use this function on some dummy dataset is provided in [shift_identification_detection/dummy_shift_identification_pipeline_demo.ipynb]([shift_identification_detection/dummy_shift_identification_pipeline_demo.ipynb]). 
