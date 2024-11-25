@@ -27,7 +27,7 @@ All datasets are publicly available and be downloaded at:
 * EMBED [https://pubs.rsna.org/doi/full/10.1148/ryai.220047](https://pubs.rsna.org/doi/full/10.1148/ryai.220047), [https://github.com/Emory-HITI/EMBED_Open_Data/tree/main](https://github.com/Emory-HITI/EMBED_Open_Data/tree/main)
 * Kaggle EyePacs dataset [https://www.kaggle.com/c/diabetic-retinopathy-detection/data](https://www.kaggle.com/c/diabetic-retinopathy-detection/data)
 * Kaggle Aptos dataset [https://www.kaggle.com/competitions/aptos2019-blindness-detection/data](https://www.kaggle.com/competitions/aptos2019-blindness-detection/data)
-* MESSIDOR-v2 dataset (https://www.adcis.net/en/third-party/messidor2/)[https://www.adcis.net/en/third-party/messidor2/]
+* MESSIDOR-v2 dataset [https://www.adcis.net/en/third-party/messidor2/](https://www.adcis.net/en/third-party/messidor2/)
 
 #### Splits generation
 For every dataset we provide our train/test/split generation code to ensure reproducibility. Please run all the notebooks in [data_handling/df_creation_notebooks](data_handling/df_creation_notebooks/) to create and save the necessary splits csv.
