@@ -68,7 +68,7 @@ def get_or_save_outputs(
                 ).model.eval()
             case "simclr_imagenet":
                 # From https://github.com/AndrewAtanov/simclr-pytorch/blob/master/README.md
-                model_weights = "/vol/biomedic3/mb121/shift_identification/experiments/pretrained_models/resnet50_imagenet_bs2k_epochs600.pth.tar"  # noqa
+                model_weights = "pretrained_models/resnet50_imagenet_bs2k_epochs600.pth.tar"  # noqa
                 # Converting state dict to my model wrapper
                 state_dict = torch.load(model_weights)["state_dict"]
                 new_state_dict = {}
@@ -80,27 +80,6 @@ def get_or_save_outputs(
                 )
                 encoder_module.load_state_dict(new_state_dict, strict=False)
                 encoder = encoder_module.model.eval()
-            case "retfound":
-                encoder = ClassificationModule(
-                    num_classes=2, encoder_name="retfound", input_channels=3
-                ).model.eval()
-            case "cxr_mae" | "embed_mae":
-                encoder = ClassificationModule(
-                    num_classes=2, encoder_name=encoder_to_evaluate, input_channels=1
-                ).model.eval()
-            case "imagenet_mae":
-                encoder = mae_vit_base_patch16(img_size=224, in_chans=3)
-                encoder.load_state_dict(
-                    torch.load("mae_pretrain_vit_base.pth")["model"], strict=False
-                )
-                encoder.eval()
-            case "random":
-                encoder = ClassificationModule(
-                    num_classes=2,
-                    encoder_name="resnet50",
-                    pretrained=False,
-                    input_channels=1 if dataset_name.lower() != "retina" else 3,
-                ).model.eval()
             case _:
                 try:
                     encoder = ClassificationModule.load_from_checkpoint(

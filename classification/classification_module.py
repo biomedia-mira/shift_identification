@@ -246,67 +246,6 @@ class ClassificationModule(pl.LightningModule):
                 pretrained=self.pretrained,
                 input_channels=self.input_channels,
             )
-        elif self.encoder_name == "retfound":
-            # call the model
-            model = models_vit.__dict__["vit_large_patch16"](
-                num_classes=self.num_classes,
-                drop_path_rate=0.2,
-                global_pool=True,
-            )
-
-            # load RETFound weights
-            checkpoint = torch.load(
-                "/vol/biomedic3/mb121/harmonisation/RETFound_cfp_weights.pth",
-                map_location="cpu",
-            )
-            checkpoint_model = checkpoint["model"]
-            state_dict = model.state_dict()
-            for k in ["head.weight", "head.bias"]:
-                if (
-                    k in checkpoint_model
-                    and checkpoint_model[k].shape != state_dict[k].shape
-                ):
-                    print(f"Removing key {k} from pretrained checkpoint")
-                    del checkpoint_model[k]
-
-            # interpolate position embedding
-            models_vit.interpolate_pos_embed(model, checkpoint_model)
-
-            # load pre-trained model
-            msg = model.load_state_dict(checkpoint_model, strict=False)
-
-            assert set(msg.missing_keys) == {
-                "head.weight",
-                "head.bias",
-                "fc_norm.weight",
-                "fc_norm.bias",
-            }
-
-            print("Model = %s" % str(model))
-
-            return model
-        elif self.encoder_name == "cxr_mae":
-            model = models_vit.mae_vit_base_patch16(in_chans=1, img_size=224)
-            state_dict = torch.load(
-                "/vol/biomedic3/mb121/shift_identification/epoch=999.ckpt"
-            )["state_dict"]
-            new_state_dict = {}
-            for k, v in state_dict.items():
-                if "decoder" not in k and "fc." not in k:
-                    new_state_dict[k.replace("model.", "")] = v
-            model.load_state_dict(new_state_dict, strict=False)
-            return model
-        elif self.encoder_name == "embed_mae":
-            model = models_vit.mae_vit_base_patch16(in_chans=1, img_size=[224, 192])
-            state_dict = torch.load(
-                "/vol/biomedic3/mb121/shift_identification/epoch=967.ckpt"
-            )["state_dict"]
-            new_state_dict = {}
-            for k, v in state_dict.items():
-                if "decoder" not in k and "fc." not in k:
-                    new_state_dict[k.replace("model.", "")] = v
-            model.load_state_dict(new_state_dict, strict=False)
-            return model
         else:
             raise NotImplementedError
 

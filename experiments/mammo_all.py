@@ -160,12 +160,12 @@ if __name__ == "__main__":
     print(args)
 
     model_to_evaluate = (
-        "/vol/biomedic3/mb121/shift_identification/outputs/run_zexo630s/best.ckpt"
+        "path-to-task-model-checkpoint"
     )
 
     if args.encoder_type == "simclr_modality_specific":
         encoder_to_evaluate = (
-            "/vol/biomedic3/mb121/causal-contrastive/outputs/run_byatk1eo/best.ckpt"
+            "path-to-modality-specific-simclr-checkpoint"
         )
     elif args.encoder_type == "model":
         encoder_to_evaluate = model_to_evaluate

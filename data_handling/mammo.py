@@ -12,13 +12,8 @@ from data_handling.base import BaseDataModuleClass
 from data_handling.caching import SharedCache
 from torchvision.transforms import Resize
 
-
-EMBED_ROOT = (
-    "/data2/mb121/EMBED"
-    if Path("/data2/mb121/EMBED").exists()
-    else "/vol/biomedic3/data/EMBED"
-)
-VINDR_MAMMO_DIR = Path("/vol/biomedic3/data/VinDR-Mammo")
+PROJECT_ROOT = Path(__file__).parent.parent
+EMBED_ROOT = "YOUR PATH TO EMBED"
 
 domain_maps = {
     "HOLOGIC, Inc.": 0,
@@ -151,13 +146,13 @@ class EmbedDataModule(BaseDataModuleClass):
 
     def create_datasets(self) -> None:
         train_dataset = pd.read_csv(
-            "/vol/biomedic3/mb121/shift_identification/experiments/train_embed.csv"
+            PROJECT_ROOT / "data/train_embed.csv"
         )
         val_dataset = pd.read_csv(
-            "/vol/biomedic3/mb121/shift_identification/experiments/val_embed.csv"
+            PROJECT_ROOT / "data/val_embed.csv"
         )
         test_dataset = pd.read_csv(
-            "/vol/biomedic3/mb121/shift_identification/experiments/test_embed.csv"
+            PROJECT_ROOT / "data/test_embed.csv"
         )
         self.target_size = self.config.data.augmentations.resize
 

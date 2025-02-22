@@ -13,29 +13,23 @@ from data_handling.caching import SharedCache
 
 
 # Please update this with your own paths.
-PATH_TO_PNEUMONIA_WITH_METADATA_CSV = (
-    Path(__file__).parent / "pneumonia_dataset_with_metadata.csv"
-)
+PADCHEST_ROOT = Path("YOUR PATH")
+PADCHEST_IMAGES = PADCHEST_ROOT / "preprocessed"
 
-if Path("/data/PadChest").exists():
-    PADCHEST_ROOT = Path("/data/PadChest/PadChest")
-    PADCHEST_IMAGES = PADCHEST_ROOT / "preprocessed"
-else:
-    PADCHEST_ROOT = Path("/vol/biodata/data/chest_xray/BIMCV-PADCHEST")
-    PADCHEST_IMAGES = PADCHEST_ROOT / "images"
+PROJECT_ROOT = Path(__file__).parent.parent
 
 
 class PadChestDataModule(BaseDataModuleClass):
     def create_datasets(self):
         label_col = "pneumonia"
         train_df = pd.read_csv(
-            "/vol/biomedic3/mb121/shift_identification/shift_exploration/train_padchest.csv"
+            PROJECT_ROOT / "data/train_padchest.csv"
         )
         val_df = pd.read_csv(
-            "/vol/biomedic3/mb121/shift_identification/shift_exploration/val_padchest.csv"
+            PROJECT_ROOT / "data/val_padchest.csv"
         )
         test_df = pd.read_csv(
-            "/vol/biomedic3/mb121/shift_identification/shift_exploration/test_padchest.csv"
+            PROJECT_ROOT / "data/test_padchest.csv"
         )
 
         self.dataset_train = PadChestDataset(

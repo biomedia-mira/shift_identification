@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import Dict, Callable
 
 import pandas as pd
@@ -10,6 +11,8 @@ from data_handling.caching import SharedCache
 from torchvision.transforms import ToTensor, Resize, CenterCrop
 
 
+
+PROJECT_ROOT  = Path(__file__).parent.parent
 class RetinaDataset(Dataset):
     def __init__(
         self,
@@ -70,13 +73,13 @@ class RetinaDataset(Dataset):
 class RetinaDataModule(BaseDataModuleClass):
     def create_datasets(self):
         train_df = pd.read_csv(
-            "/vol/biomedic3/mb121/shift_identification/experiments/retina_train.csv"
+            PROJECT_ROOT / "data/retina_train.csv"
         )
         val_df = pd.read_csv(
-            "/vol/biomedic3/mb121/shift_identification/experiments/retina_val.csv"
+            PROJECT_ROOT / "data/retina_val.csv"
         )
         test_df = pd.read_csv(
-            "/vol/biomedic3/mb121/shift_identification/experiments/retina_test.csv"
+            PROJECT_ROOT / "data/retina_test.csv"
         )
 
         self.dataset_train = RetinaDataset(
