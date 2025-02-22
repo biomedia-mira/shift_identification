@@ -1,6 +1,6 @@
-# Automatic dataset shift identification to support root cause analysis of AI performance drift
+# Automatic dataset shift identification to support safe deployment of medical imaging AI
 
-This repository contains the code associated with the paper [Automatic dataset shift identification to support root cause analysis of AI performance drift](https://arxiv.org/abs/2411.07940). 
+This repository contains the code associated with the paper _Automatic dataset shift identification to support safe deployment of medical imaging AI_.
 
 ## Overview
 The code is divided into the following main folders:
@@ -57,4 +57,5 @@ Args:
    - num_classes: num classes in the task model, defaults to 2.
    - alpha: defaults to 0.05, significance level for the statistical tests.
 ```
+
 A demo on how to use this function on some dummy dataset is provided in [shift_identification_detection/dummy_shift_identification_pipeline_demo.ipynb]([shift_identification_detection/dummy_shift_identification_pipeline_demo.ipynb]). 
