@@ -20,7 +20,6 @@ ALL_SHIFTS = [
 ]
 
 
-# TODO clean up
 def get_type(is_detected_global, is_detected_resampled):
     """
     Returns identified shift based on p-values of global
