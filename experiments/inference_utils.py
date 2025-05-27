@@ -136,6 +136,10 @@ def get_or_save_outputs(
                         # EMBED data by default 224*192. Not compatible with imagenet mae resize to 224*224
                         if encoder_to_evaluate == "imagenet_mae" and x.shape[-1] != 224:
                             x = center_crop(x, 224)
+                        # To handle 1-channel images for encoders pretrained
+                        # with RGB images (e.g. SimCLR ImageNet):
+                        if encoder.input_channels == 3 and x.shape[1] == 1:
+                            x = torch.repeat_interleave(x, 3, 1)
                         try:
                             feats1, last_feats = encoder.get_features(
                                 x, include_early_feats=True
