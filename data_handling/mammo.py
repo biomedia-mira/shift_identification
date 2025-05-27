@@ -1,3 +1,13 @@
+"""
+This file contains all dataset classes for the EMBED dataset.
+
+IMPORTANT: Pre-requisites.
+1. Download the dataset, unzip and update the corresponding
+path in the default_paths.py file
+2. Run data_handling/preprocess_and_splits_creation/1-generate-splits/mammo_df_creation.ipynb
+to save our train/val/split files.
+"""
+
 from pathlib import Path
 from typing import Any
 
@@ -12,13 +22,7 @@ from data_handling.base import BaseDataModuleClass
 from data_handling.caching import SharedCache
 from torchvision.transforms import Resize
 
-
-EMBED_ROOT = (
-    "/data2/mb121/EMBED"
-    if Path("/data2/mb121/EMBED").exists()
-    else "/vol/biomedic3/data/EMBED"
-)
-VINDR_MAMMO_DIR = Path("/vol/biomedic3/data/VinDR-Mammo")
+from default_paths import ROOT, EMBED_ROOT
 
 domain_maps = {
     "HOLOGIC, Inc.": 0,
@@ -150,15 +154,9 @@ class EmbedDataModule(BaseDataModuleClass):
         return "EMBED"
 
     def create_datasets(self) -> None:
-        train_dataset = pd.read_csv(
-            "/vol/biomedic3/mb121/shift_identification/experiments/train_embed.csv"
-        )
-        val_dataset = pd.read_csv(
-            "/vol/biomedic3/mb121/shift_identification/experiments/val_embed.csv"
-        )
-        test_dataset = pd.read_csv(
-            "/vol/biomedic3/mb121/shift_identification/experiments/test_embed.csv"
-        )
+        train_dataset = pd.read_csv(ROOT / "experiments" / "train_embed.csv")
+        val_dataset = pd.read_csv(ROOT / "experiments" / "val_embed.csv")
+        test_dataset = pd.read_csv(ROOT / "experiments" / "test_embed.csv")
         self.target_size = self.config.data.augmentations.resize
 
         self.dataset_train = EmbedDataset(

@@ -1,3 +1,19 @@
+"""
+This file contains all dataset classes for the CXR datasets
+PadChest and RSNA Pneumonia.
+
+IMPORTANT: Pre-requisites.
+1. Download the two datasets, unzip and update the corresponding
+paths in the default_paths.py file
+2. For RSNA:
+    a. run the data_handling/preprocess_and_splits_creation/1-generate-splits/rsna_df_creation.ipynb
+    notebook to save the splits (train/val/test)
+    b. run the /Users/mel/Source/shift_identification/data_handling/preprocess_and_splits_creation/2-create-preprocessed-images/rsna_preprocess.py
+    file to save the preprocessed images (png resized to 224x224)
+3. For PadChest run /Users/mel/Source/shift_identification/data_handling/preprocess_and_splits_creation/1-generate-splits/pachest_df_creation.ipynb
+to generate the splits
+"""
+
 from pathlib import Path
 from typing import Callable, Dict
 import numpy as np
@@ -11,34 +27,20 @@ from data_handling.base import BaseDataModuleClass
 
 from data_handling.caching import SharedCache
 
-
-# Please update this with your own paths.
-DATA_DIR_RSNA = Path("/vol/biomedic3/mb121/rsna-pneumonia-detection-challenge")
-DATA_DIR_RSNA_PROCESSED_IMAGES = DATA_DIR_RSNA / "preprocess_224_224"
-PATH_TO_PNEUMONIA_WITH_METADATA_CSV = (
-    Path(__file__).parent / "pneumonia_dataset_with_metadata.csv"
+from default_paths import (
+    ROOT,
+    DATA_DIR_RSNA,
+    PADCHEST_ROOT,
+    DATA_DIR_RSNA_PROCESSED_IMAGES,
 )
-
-if Path("/data/PadChest").exists():
-    PADCHEST_ROOT = Path("/data/PadChest/PadChest")
-    PADCHEST_IMAGES = PADCHEST_ROOT / "preprocessed"
-else:
-    PADCHEST_ROOT = Path("/vol/biodata/data/chest_xray/BIMCV-PADCHEST")
-    PADCHEST_IMAGES = PADCHEST_ROOT / "images"
 
 
 class PadChestDataModule(BaseDataModuleClass):
     def create_datasets(self):
         label_col = "pneumonia"
-        train_df = pd.read_csv(
-            "/vol/biomedic3/mb121/shift_identification/shift_exploration/train_padchest.csv"
-        )
-        val_df = pd.read_csv(
-            "/vol/biomedic3/mb121/shift_identification/shift_exploration/val_padchest.csv"
-        )
-        test_df = pd.read_csv(
-            "/vol/biomedic3/mb121/shift_identification/shift_exploration/test_padchest.csv"
-        )
+        train_df = pd.read_csv(ROOT / "experiments" / "train_padchest.csv")
+        val_df = pd.read_csv(ROOT / "experiments" / "val_padchest.csv")
+        test_df = pd.read_csv(ROOT / "experiments" / "test_padchest.csv")
 
         self.dataset_train = PadChestDataset(
             df=train_df,
@@ -104,13 +106,17 @@ class PadChestDataset(Dataset):
 
     def read_image(self, idx):
         try:
-            img = io.imread(PADCHEST_IMAGES / self.img_paths[idx], as_gray=True)
+            img = io.imread(
+                PADCHEST_ROOT / "images" / self.img_paths[idx], as_gray=True
+            )
         except:  # noqa
             from PIL import ImageFile
 
             ImageFile.LOAD_TRUNCATED_IMAGES = True
             print(self.img_paths[idx])
-            img = io.imread(PADCHEST_IMAGES / self.img_paths[idx], as_gray=True)
+            img = io.imread(
+                PADCHEST_ROOT / "images" / self.img_paths[idx], as_gray=True
+            )
             print("success")
             ImageFile.LOAD_TRUNCATED_IMAGES = False
         img = img / (img.max() + 1e-12)
@@ -215,11 +221,16 @@ class RSNAPneumoniaDataModule(BaseDataModuleClass):
         """
         Pytorch Lightning DataModule defining train / val / test splits for the RSNA dataset.
         """
+
         if not DATA_DIR_RSNA_PROCESSED_IMAGES.exists():
             print(
                 f"Data dir: {DATA_DIR_RSNA_PROCESSED_IMAGES} does not exist."
                 + " Have you updated default_paths.py?"
             )
+
+        PATH_TO_PNEUMONIA_WITH_METADATA_CSV = (
+            Path(__file__).parent / "pneumonia_dataset_with_metadata.csv"
+        )
 
         if not PATH_TO_PNEUMONIA_WITH_METADATA_CSV.exists():
             print(
@@ -230,18 +241,18 @@ class RSNAPneumoniaDataModule(BaseDataModuleClass):
                 https://www.kaggle.com/datasets/nih-chest-xrays/data from
                 which i took the metadata.
                 To get the full csv with all the metadata please run
-                data_handling/csv_generation_code/rsna_generate_full_csv.py
+                data_handling/preprocessing_df_creation/0-generate-csv/rsna_generate_csv.py
                 """
             )
 
         train_df = pd.read_csv(
-            "/vol/biomedic3/mb121/shift_identification/shift_exploration/train_rsna.csv"
+            "/vol/biomedic3/mb121/shift_identification/experiments/train_rsna.csv"
         )
         val_df = pd.read_csv(
-            "/vol/biomedic3/mb121/shift_identification/shift_exploration/val_rsna.csv"
+            "/vol/biomedic3/mb121/shift_identification/experiments/val_rsna.csv"
         )
         test_df = pd.read_csv(
-            "/vol/biomedic3/mb121/shift_identification/shift_exploration/test_rsna.csv"
+            "/vol/biomedic3/mb121/shift_identification/experiments/test_rsna.csv"
         )
 
         self.dataset_train = RNSAPneumoniaDetectionDataset(

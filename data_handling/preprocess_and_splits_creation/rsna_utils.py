@@ -1,4 +1,4 @@
-#  Most function in this file are adapted from the Active Label Cleaning paper code:
+#  Most function in this cell are adapted from the Active Label Cleaning paper code:
 # https://github.com/microsoft/InnerEye-DeepLearning/blob/
 # /InnerEye-DataQuality/InnerEyeDataQuality/datasets/noisy_cxr_benchmark_creation/
 # create_noisy_chestxray_dataset.py
@@ -68,20 +68,3 @@ def create_mapping_dataset_nih(
     merged.drop(columns=["x", "y", "width", "height"], inplace=True)
     merged.drop_duplicates(subset="patientId", inplace=True)
     return merged
-
-
-if __name__ == "__main__":
-    current_dir = Path(__file__).parent
-    mapping_file = (
-        Path(__file__).parent
-        / "original_csvs"
-        / "pneumonia-challenge-dataset-mappings_2018.json"
-    )
-    nih_metadata = Path(__file__).parent / "original_csvs" / "Data_Entry_2017.csv"
-    kaggle_dataset_path = current_dir / "original_csvs" / "stage_2_train_labels.csv"
-    dataset = create_mapping_dataset_nih(
-        mapping_file,
-        nih_metadata,
-        kaggle_dataset_path,
-    )
-    dataset.to_csv(current_dir / "pneumonia_dataset_with_metadata.csv", index=False)

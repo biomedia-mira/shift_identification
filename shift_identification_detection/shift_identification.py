@@ -6,7 +6,9 @@ from tqdm.autonotebook import tqdm
 
 import pandas as pd
 from shift_identification_detection.mmd_test import run_mmd_permutation_test
-from shift_identification_detection.prevalence_shift_adaptation import get_cpmcn_probabilities
+from shift_identification_detection.prevalence_shift_adaptation import (
+    get_cpmcn_probabilities,
+)
 from sklearn.decomposition import PCA
 from shift_identification_detection.bbsd_tests import run_bbsd
 
@@ -91,8 +93,13 @@ def run_shift_identification(
     y_val = y_val[val_idx]
     encoder_feats_test = encoder_output["test"]["feats"][idx_shifted]
     probas_test = task_output["test"]["probas"][idx_shifted] + 1e-16
-    assert task_output["test"]["probas"].shape[0] == encoder_output["test"]["feats"].shape[0]
-    assert task_output["val"]["probas"].shape[0] == encoder_output["val"]["feats"].shape[0]
+    assert (
+        task_output["test"]["probas"].shape[0]
+        == encoder_output["test"]["feats"].shape[0]
+    )
+    assert (
+        task_output["val"]["probas"].shape[0] == encoder_output["val"]["feats"].shape[0]
+    )
     n_val = encoder_feats_val.shape[0]
 
     # Run BBSD

@@ -24,9 +24,9 @@ def get_modules(config, shuffle_training: bool = True):
         loss=config.trainer.loss,
         contrastive_temperature=config.trainer.contrastive_temperature,
         input_channels=config.data.input_channels,
-        weights=torch.tensor(config.data.weights)
-        if config.data.weights != "None"
-        else None,
+        weights=(
+            torch.tensor(config.data.weights) if config.data.weights != "None" else None
+        ),
     )
 
     return data_module, module
