@@ -9,9 +9,10 @@ Pillow==11.0.0
 lightning==2.4.0
 scikit-learn==1.5.2
 scipy==1.14.1
-scikit-image==0.0
+scikit-image
 timm==1.0.11
 torch==2.4.1
 torchvision==0.19.1
 tqdm==4.66.5
 seaborn==0.13.2
+wandb
