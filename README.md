@@ -34,7 +34,9 @@ NIH to RSNA mapping file | [https://s3.amazonaws.com/east1.public.rsna.org/AI/20
 | Kaggle Diabetic Retinopathy | [https://www.kaggle.com/c/diabetic-retinopathy-detection/data](https://www.kaggle.com/c/diabetic-retinopathy-detection/data) | DIABETIC_ROOT |
 | EMBED | [https://github.com/Emory-HITI/EMBED_Open_Data/tree/main](https://github.com/Emory-HITI/EMBED_Open_Data/tree/main) | EMBED_ROOT |
 
-Make sure to download all the datasets you need first and **update your paths** in [default_paths.py](default_paths.py). To facilitate the mapping between download and paths we have provided the corresponding download links for each path in the `default_paths.py` file as well. 
+To facilitate the mapping between download and paths we have provided the corresponding download links for each path in the `default_paths.py` file as well. 
+
+**IMPORTANT**: just download and unzip the datasets, do not modify the structure or the file names as the split generation files and dataset classes assume your folder follows the structure as per the downloaded datasets.
 
 #### Step 2.b. Dataset csv preparation and splits generation
 For every dataset we provide our train/test/split generation code to ensure reproducibility. Please run all the notebooks in [data_handling/preprocess_and_splits_creation](data_handling/preprocess_and_splits_creation/) to create and save the necessary splits csv **before running the code**.
