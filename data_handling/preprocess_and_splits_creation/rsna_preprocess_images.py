@@ -8,7 +8,6 @@ you need to specify in default_paths.py
 import numpy as np
 import pandas as pd
 import pydicom
-from tqdm import tqdm
 from default_paths import DATA_DIR_RSNA, DATA_DIR_RSNA_PROCESSED_IMAGES
 
 from PIL import Image

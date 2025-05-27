@@ -29,7 +29,6 @@ from data_handling.caching import SharedCache
 
 from default_paths import (
     ROOT,
-    DATA_DIR_RSNA,
     PADCHEST_ROOT,
     DATA_DIR_RSNA_PROCESSED_IMAGES,
 )

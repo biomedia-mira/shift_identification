@@ -8,7 +8,6 @@ path in the default_paths.py file
 to save our train/val/split files.
 """
 
-from pathlib import Path
 from typing import Any
 
 import cv2
@@ -22,7 +21,7 @@ from data_handling.base import BaseDataModuleClass
 from data_handling.caching import SharedCache
 from torchvision.transforms import Resize
 
-from default_paths import ROOT, EMBED_ROOT
+from default_paths import ROOT
 
 domain_maps = {
     "HOLOGIC, Inc.": 0,
