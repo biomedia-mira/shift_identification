@@ -1,3 +1,4 @@
+from default_paths import PATH_TO_SIMCLR_IMAGENET
 import torch
 
 from pathlib import Path
@@ -68,7 +69,7 @@ def get_or_save_outputs(
                 ).model.eval()
             case "simclr_imagenet":
                 # From https://github.com/AndrewAtanov/simclr-pytorch/blob/master/README.md
-                model_weights = "/vol/biomedic3/mb121/shift_identification/experiments/pretrained_models/resnet50_imagenet_bs2k_epochs600.pth.tar"  # noqa
+                model_weights = PATH_TO_SIMCLR_IMAGENET  # noqa
                 # Converting state dict to my model wrapper
                 state_dict = torch.load(model_weights)["state_dict"]
                 new_state_dict = {}

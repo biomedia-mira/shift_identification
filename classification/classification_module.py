@@ -2,6 +2,7 @@ import io
 from typing import Any, Optional
 
 import matplotlib.pyplot as plt
+from default_paths import PATH_TO_RETFOUND
 import numpy as np
 import pytorch_lightning as pl
 import torch
@@ -256,7 +257,7 @@ class ClassificationModule(pl.LightningModule):
 
             # load RETFound weights
             checkpoint = torch.load(
-                "/vol/biomedic3/mb121/harmonisation/RETFound_cfp_weights.pth",
+                PATH_TO_RETFOUND,
                 map_location="cpu",
             )
             checkpoint_model = checkpoint["model"]
@@ -285,28 +286,6 @@ class ClassificationModule(pl.LightningModule):
             print("Model = %s" % str(model))
 
             return model
-        elif self.encoder_name == "cxr_mae":
-            model = models_vit.mae_vit_base_patch16(in_chans=1, img_size=224)
-            state_dict = torch.load(
-                "/vol/biomedic3/mb121/shift_identification/epoch=999.ckpt"
-            )["state_dict"]
-            new_state_dict = {}
-            for k, v in state_dict.items():
-                if "decoder" not in k and "fc." not in k:
-                    new_state_dict[k.replace("model.", "")] = v
-            model.load_state_dict(new_state_dict, strict=False)
-            return model
-        elif self.encoder_name == "embed_mae":
-            model = models_vit.mae_vit_base_patch16(in_chans=1, img_size=[224, 192])
-            state_dict = torch.load(
-                "/vol/biomedic3/mb121/shift_identification/epoch=967.ckpt"
-            )["state_dict"]
-            new_state_dict = {}
-            for k, v in state_dict.items():
-                if "decoder" not in k and "fc." not in k:
-                    new_state_dict[k.replace("model.", "")] = v
-            model.load_state_dict(new_state_dict, strict=False)
-            return model
         else:
             raise NotImplementedError
 
@@ -318,8 +297,10 @@ class ClassificationModule(pl.LightningModule):
                 for j in range(2):
                     img = np.transpose(data[i, j], [1, 2, 0])
                     img = (img - img.min()) / (img.max() - img.min())
-                    ax[j, i].imshow(img) if img.shape[-1] == 3 else ax[j, i].imshow(
-                        img, cmap="gray"
+                    (
+                        ax[j, i].imshow(img)
+                        if img.shape[-1] == 3
+                        else ax[j, i].imshow(img, cmap="gray")
                     )
                     ax[j, i].set_title(y[i])
                     ax[j, i].axis("off")
@@ -328,8 +309,10 @@ class ClassificationModule(pl.LightningModule):
             for i in range(min(10, data.shape[0])):
                 img = np.transpose(data[i], [1, 2, 0])
                 img = (img - img.min()) / (img.max() - img.min())
-                ax[i].imshow(img) if img.shape[-1] == 3 else ax[i].imshow(
-                    img, cmap="gray"
+                (
+                    ax[i].imshow(img)
+                    if img.shape[-1] == 3
+                    else ax[i].imshow(img, cmap="gray")
                 )
                 ax[i].set_title(y[i])
                 ax[i].axis("off")

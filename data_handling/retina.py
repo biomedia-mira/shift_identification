@@ -1,3 +1,14 @@
+"""
+This file contains all dataset classes for the RETINA dataset.
+
+IMPORTANT: Pre-requisites.
+1. Download the three base datasets, APTOS, MESSIDOR and RSNA
+Diabetic Retinopathy, unzip and update the corresponding
+paths in the default_paths.py file
+2. Run the data_handling/preprocess_and_splits_creation/1-generate-splits/retina_df_creation.ipynb
+to prepare the csv and save our train/val/split files.
+"""
+
 from typing import Dict, Callable
 
 import pandas as pd
@@ -8,6 +19,8 @@ from torch.utils.data import Dataset
 from data_handling.base import BaseDataModuleClass
 from data_handling.caching import SharedCache
 from torchvision.transforms import ToTensor, Resize, CenterCrop
+
+from default_paths import ROOT
 
 
 class RetinaDataset(Dataset):
@@ -69,15 +82,9 @@ class RetinaDataset(Dataset):
 
 class RetinaDataModule(BaseDataModuleClass):
     def create_datasets(self):
-        train_df = pd.read_csv(
-            "/vol/biomedic3/mb121/shift_identification/experiments/retina_train.csv"
-        )
-        val_df = pd.read_csv(
-            "/vol/biomedic3/mb121/shift_identification/experiments/retina_val.csv"
-        )
-        test_df = pd.read_csv(
-            "/vol/biomedic3/mb121/shift_identification/experiments/retina_test.csv"
-        )
+        train_df = pd.read_csv(ROOT / "experiments" / "retina_train.csv")
+        val_df = pd.read_csv(ROOT / "experiments" / "retina_val.csv")
+        test_df = pd.read_csv(ROOT / "experiments" / "retina_test.csv")
 
         self.dataset_train = RetinaDataset(
             df=train_df,
