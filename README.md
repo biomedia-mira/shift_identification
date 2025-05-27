@@ -23,16 +23,16 @@ You will need to download the relevant datasets to run our code.
 #### Step 2.a.: Download datasets and update `default_paths.py`
 All datasets are publicly available. For each dataset download the data from the below link, unzip, and update the path in `default_paths.py`:
 
-| Dataset | Link | Path to update in `default_paths.py` |
+| Dataset | Path to update in `default_paths.py` | Link |
 |----------|----------|----------|
-| PadChest    | [https://bimcv.cipf.es/bimcv-projects/padchest/](https://bimcv.cipf.es/bimcv-projects/padchest/)     | PADCHEST_ROOT   |
-| RSNA Pneumonia    | [https://www.kaggle.com/c/rsna-pneumonia-detection-challenge](https://www.kaggle.com/c/rsna-pneumonia-detection-challenge)     | DATA_DIR_RSNA    |
-| NIH metadata csv | [https://www.kaggle.com/datasets/nih-chest-xrays/data](https://www.kaggle.com/datasets/nih-chest-xrays/data) > Data_Entry_2017.csv | NIH_METADATA_CSV |
-NIH to RSNA mapping file | [https://s3.amazonaws.com/east1.public.rsna.org/AI/2018/pneumonia-challenge-dataset-mappings_2018.json](https://s3.amazonaws.com/east1.public.rsna.org/AI/2018/pneumonia-challenge-dataset-mappings_2018.json) | PATH_NIH_TO_RSNA_MAPPING |
-| MESSIDOR-v2 dataset | [https://www.adcis.net/en/third-party/messidor2/](https://www.adcis.net/en/third-party/messidor2/) | MESSIDOR_ROOT |
-| Kaggle Aptos dataset | [https://www.kaggle.com/competitions/aptos2019-blindness-detection/data](https://www.kaggle.com/competitions/aptos2019-blindness-detection/data) | APTOS_ROOT |
-| Kaggle Diabetic Retinopathy | [https://www.kaggle.com/c/diabetic-retinopathy-detection/data](https://www.kaggle.com/c/diabetic-retinopathy-detection/data) | DIABETIC_ROOT |
-| EMBED | [https://github.com/Emory-HITI/EMBED_Open_Data/tree/main](https://github.com/Emory-HITI/EMBED_Open_Data/tree/main) | EMBED_ROOT |
+| PadChest    |  PADCHEST_ROOT   | [https://bimcv.cipf.es/bimcv-projects/padchest/](https://bimcv.cipf.es/bimcv-projects/padchest/)     | 
+| RSNA Pneumonia    | DATA_DIR_RSNA    | [https://www.kaggle.com/c/rsna-pneumonia-detection-challenge](https://www.kaggle.com/c/rsna-pneumonia-detection-challenge)     | 
+| NIH metadata csv | NIH_METADATA_CSV | [https://www.kaggle.com/datasets/nih-chest-xrays/data](https://www.kaggle.com/datasets/nih-chest-xrays/data) > Data_Entry_2017.csv | 
+NIH to RSNA mapping file | PATH_NIH_TO_RSNA_MAPPING | [https://s3.amazonaws.com/east1.public.rsna.org/AI/2018/pneumonia-challenge-dataset-mappings_2018.json](https://s3.amazonaws.com/east1.public.rsna.org/AI/2018/pneumonia-challenge-dataset-mappings_2018.json) | 
+| MESSIDOR-v2 dataset | MESSIDOR_ROOT | [https://www.adcis.net/en/third-party/messidor2/](https://www.adcis.net/en/third-party/messidor2/) | 
+| Kaggle Aptos dataset | APTOS_ROOT | [https://www.kaggle.com/competitions/aptos2019-blindness-detection/data](https://www.kaggle.com/competitions/aptos2019-blindness-detection/data) | 
+| Kaggle Diabetic Retinopathy | DIABETIC_ROOT | [https://www.kaggle.com/c/diabetic-retinopathy-detection/data](https://www.kaggle.com/c/diabetic-retinopathy-detection/data) | 
+| EMBED | EMBED_ROOT | [https://github.com/Emory-HITI/EMBED_Open_Data/tree/main](https://github.com/Emory-HITI/EMBED_Open_Data/tree/main) | 
 
 To facilitate the mapping between download and paths we have provided the corresponding download links for each path in the `default_paths.py` file as well. 
 
