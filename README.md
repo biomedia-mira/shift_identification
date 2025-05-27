@@ -43,9 +43,26 @@ For every dataset we provide our train/test/split generation code to ensure repr
 
 For RSNA, you also need to run [data_handling/preprocess_and_splits_creation/rsna_preprocess_images.py](data_handling/preprocess_and_splits_creation/rsna_preprocess_images.py) to save the preprocessed images (224x224 pngs).
 
-### Step 3: Download pre-trained models
+### Step 3: Download pre-trained encoders weights
 In our paper, we test the capabilities of several pretrained encoders, readily available for download. Make sure you download the weights for the pre-trained SimCLR model trained on ImageNet from [https://github.com/AndrewAtanov/simclr-pytorch](https://github.com/AndrewAtanov/simclr-pytorch) and update PATH_TO_SIMCLR_IMAGENET in `default_paths.py`. Similarly download the RetFound model weight from [RetFound](ttps://github.com/rmaphoh/RETFound_MAE) and update the PATH_TO_RETFOUND.
 
+
+
+## Main shift identification pipeline function
+The main shift identification pipeline function can be found in [shift_identification_detection/shift_identification.py](shift_identification/shift_identification.py) in the `run_shift_identification` function.
+This function runs one iteration shift identification/detection tests for a fixed reference and test set. A demo on how to use this function on some toy 2D dataset is provided in [shift_identification_detection/dummy_shift_identification_pipeline_demo.ipynb]([shift_identification_detection/dummy_shift_identification_pipeline_demo.ipynb]).
+
+The function takes the following arguments:
+```
+Args:
+   - task_output: output dict for task model. Should have two key 'val' and 'test' containing the results on the full validation (reference) and test sets. task_output['val'] should be a dictionary with at least a field 'y' with the ground truth, and 'probas' for the predicted probability by the task model. task_output['test'] should be a dictionary with a field 'probas' for the probability predicted by the model on the test set.
+  - encoder_output: output dict for encoder. Should have two key 'val' and 'test' containing the results on the full validation (reference) and test sets. encoder_output[<split_name>] should be a dictionary with a key 'feats' containing the extracted features for each image in the set.
+   - idx_shifted: which indices of the test split form sampled the target set. If the full test set should be considered as the test set, simply use np.arange(test_set_size).
+   - val_idx: which indices of the val split should be used for the current reference set, if the full validation set should be used for the reference set, simply use np.arange(val_set_size).
+   - num_classes: num classes in the task model, defaults to 2.
+   - alpha: defaults to 0.05, significance level for the statistical tests.
+```
+ 
 ## Shift identification - Workflow example to reproduce paper experiments
 Here we detail the full workflow to reproduce all shift identification results for the mammography dataset. 
 1. Train the task model with `python classification/train.py experiment=base_density`. This should only take a couple of hours to train (on a single GPU).
@@ -69,19 +86,3 @@ Here we detail the full workflow to reproduce all shift identification results f
     
 5. Plot the results with `plot_all_results.ipynb`
 
-
-## Main shift identification pipeline function
-The main shift identification pipeline function can be found in [shift_identification_detection/shift_identification.py](shift_identification/shift_identification.py) in the `run_shift_identification` function.
-This function runs one iteration shift identification/detection tests for a fixed reference and test set. A demo on how to use this function on some toy 2D dataset is provided in [shift_identification_detection/dummy_shift_identification_pipeline_demo.ipynb]([shift_identification_detection/dummy_shift_identification_pipeline_demo.ipynb]).
-
-The function takes the following arguments:
-```
-Args:
-   - task_output: output dict for task model. Should have two key 'val' and 'test' containing the results on the full validation (reference) and test sets. task_output['val'] should be a dictionary with at least a field 'y' with the ground truth, and 'probas' for the predicted probability by the task model. task_output['test'] should be a dictionary with a field 'probas' for the probability predicted by the model on the test set.
-  - encoder_output: output dict for encoder. Should have two key 'val' and 'test' containing the results on the full validation (reference) and test sets. encoder_output[<split_name>] should be a dictionary with a key 'feats' containing the extracted features for each image in the set.
-   - idx_shifted: which indices of the test split form sampled the target set. If the full test set should be considered as the test set, simply use np.arange(test_set_size).
-   - val_idx: which indices of the val split should be used for the current reference set, if the full validation set should be used for the reference set, simply use np.arange(val_set_size).
-   - num_classes: num classes in the task model, defaults to 2.
-   - alpha: defaults to 0.05, significance level for the statistical tests.
-```
- 
