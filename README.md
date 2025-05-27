@@ -39,7 +39,7 @@ To facilitate the mapping between download and paths we have provided the corres
 **IMPORTANT**: just download and unzip the datasets, do not modify the structure or the file names as the split generation files and dataset classes assume your folder follows the structure as per the downloaded datasets.
 
 #### Step 2.b. Dataset csv preparation and splits generation
-For every dataset we provide our train/test/split generation code to ensure reproducibility. Please run all the notebooks in [data_handling/preprocess_and_splits_creation](data_handling/preprocess_and_splits_creation/) to create and save the necessary splits csv **before running the code**.
+For every dataset we provide our train/test/split generation code to ensure reproducibility. Please **run all the notebooks** in [data_handling/preprocess_and_splits_creation](data_handling/preprocess_and_splits_creation/) to create and save the necessary splits csv **before running the code**.
 
 For RSNA, you also need to run [data_handling/preprocess_and_splits_creation/rsna_preprocess_images.py](data_handling/preprocess_and_splits_creation/rsna_preprocess_images.py) to save the preprocessed images (224x224 pngs).
 
