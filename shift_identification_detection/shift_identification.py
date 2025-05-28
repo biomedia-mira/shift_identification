@@ -84,7 +84,6 @@ def run_shift_identification(
         num_classes: num classes
         alpha: significance level for the statistical tests
         is_embed: flag to indicate whether it is the EmBED dataset (re-sampling at exam level instead of image level)
-        run_mmd_on_early_feats: flag on whether to run MMD test using early features (for ablation study)
     """
     y_val = task_output["val"]["y"]
     n_val = y_val.shape[0]
@@ -195,7 +194,6 @@ def run_multi_detection_identification(
     alpha=0.05,
     num_classes=2,
     is_embed=False,
-    run_mmd_on_early_feats=False,
 ):
     """
     Runs shift detection/identification multiple times for evaluation.
@@ -246,7 +244,6 @@ def run_multi_detection_identification(
                     alpha=alpha,
                     num_classes=num_classes,
                     is_embed=is_embed,
-                    run_mmd_on_early_feats=run_mmd_on_early_feats,
                 )
                 outputs.update({"n_test": test_size, "boot": i, "val_size": val_size})
                 print(outputs)

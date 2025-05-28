@@ -67,7 +67,6 @@ def run_rsna(model_to_evaluate, encoder_to_evaluate, shift):
                 test_sizes=test_sizes,
                 val_sizes=val_sizes,
                 num_classes=n_cls,
-                run_mmd_on_early_feats=(encoder_to_evaluate == model_to_evaluate),
             )
             res.to_csv(filename)
             print(f"Saved {filename}")

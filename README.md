@@ -65,6 +65,7 @@ Args:
  
 ## Shift identification - Workflow example to reproduce paper experiments
 Here we detail the full workflow to reproduce all shift identification results for the mammography dataset. 
+0. Set your PYTHONPATH to the root of the repository. `export PYTHONPATH={YOUR-REPO-ROOT}`
 1. Train the task model with `python classification/train.py experiment=base_density`. This should only take a couple of hours to train (on a single GPU).
 2. [Optional] Train the self-supervised encoder with `python classification/train.py experiment=simclr_embed`. This is optional, only if you want to reproduce the detection results with the SimCLR Modality Specific encoder. If you just want to run shift identification this is not necessary. It takes a couple of days to train.
 4. Run inference and shift detection experiment with `python experiments/mammo_all.py --encoder_type={ENCODER} --shift={SHIFT}`. For each tested shift scenario, this script will save detection outputs for each bootstrap sample in a csv (one csv per shift). Running the identification experiments for all tested shifts should take a couple of hours (with 200 bootstrap samples). The arguments can take the following values:
