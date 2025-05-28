@@ -81,7 +81,7 @@ def run_padchest(model_to_evaluate, encoder_to_evaluate, shift):
                 print("Start no shift")
                 prevalence_orig = 0.036
 
-                filename = f"outputs2/padchest_prev_{prevalence_orig}_n{n_boostraps}_{model_id}_{encoder_id}_v{val_sizes[0]}_t{test_sizes}.csv"
+                filename = f"outputs/padchest_prev_{prevalence_orig}_n{n_boostraps}_{model_id}_{encoder_id}_v{val_sizes[0]}_t{test_sizes}.csv"
 
                 def shifted_set_generating_fn(target_set_size):
                     return shift_generator.sample_shift_padchest(
@@ -96,7 +96,7 @@ def run_padchest(model_to_evaluate, encoder_to_evaluate, shift):
         case "acquisition":
             print("Start acquisition shift")
             for phillips_shifted in [0.25, 0.75, 1.0]:
-                filename = f"outputs2/padchest_acq_{phillips_shifted}_n{n_boostraps}_{model_id}_{encoder_id}_v{val_sizes[0]}_t{test_sizes}.csv"
+                filename = f"outputs/padchest_acq_{phillips_shifted}_n{n_boostraps}_{model_id}_{encoder_id}_v{val_sizes[0]}_t{test_sizes}.csv"
 
                 def shifted_set_generating_fn(target_set_size):
                     return shift_generator.sample_shift_padchest(
@@ -110,7 +110,7 @@ def run_padchest(model_to_evaluate, encoder_to_evaluate, shift):
         case "gender":
             print("Start gender shift")
             for female_shifted in [0.25, 0.75, 1.0]:
-                filename = f"outputs2/padchest_gender_{female_shifted}_n{n_boostraps}_{model_id}_{encoder_id}_v{val_sizes[0]}_t{test_sizes}.csv"
+                filename = f"outputs/padchest_gender_{female_shifted}_n{n_boostraps}_{model_id}_{encoder_id}_v{val_sizes[0]}_t{test_sizes}.csv"
 
                 def shifted_set_generating_fn(target_set_size):
                     return shift_generator.padchest_gender_shift(
@@ -124,7 +124,7 @@ def run_padchest(model_to_evaluate, encoder_to_evaluate, shift):
         case "prevalence":
             print("Start prevalence shift")
             for prevalence_shifted in [0.15, 0.20, 0.30]:
-                filename = f"outputs2/padchest_prev_{prevalence_shifted}_n{n_boostraps}_{model_id}_{encoder_id}_v{val_sizes[0]}_t{test_sizes}.csv"
+                filename = f"outputs/padchest_prev_{prevalence_shifted}_n{n_boostraps}_{model_id}_{encoder_id}_v{val_sizes[0]}_t{test_sizes}.csv"
                 print(prevalence_shifted)
 
                 def shifted_set_generating_fn(target_set_size):
@@ -142,7 +142,7 @@ def run_padchest(model_to_evaluate, encoder_to_evaluate, shift):
             female_proportions = [0.75, 0.25, 1.0]
             prevalence_shifted = 0.15
             for female_shifted in female_proportions:
-                filename = f"outputs2/padchest_gender_prev_{female_shifted}_n{n_boostraps}_{model_id}_{encoder_id}_v{val_sizes[0]}_t{test_sizes}.csv"
+                filename = f"outputs/padchest_gender_prev_{female_shifted}_n{n_boostraps}_{model_id}_{encoder_id}_v{val_sizes[0]}_t{test_sizes}.csv"
 
                 def shifted_set_generating_fn(target_set_size):
                     shift_generator.padchest_gender_prev_shift(
@@ -161,7 +161,7 @@ def run_padchest(model_to_evaluate, encoder_to_evaluate, shift):
                 (0.75, 0.25),
                 (1.0, 0.25),
             ]:
-                filename = f"outputs2/padchest_acq_prev_{phillips_shifted}_n{n_boostraps}_{model_id}_{encoder_id}_v{val_sizes[0]}_d{prevalence_shifted}_t{test_sizes}.csv"
+                filename = f"outputs/padchest_acq_prev_{phillips_shifted}_n{n_boostraps}_{model_id}_{encoder_id}_v{val_sizes[0]}_d{prevalence_shifted}_t{test_sizes}.csv"
 
                 def shifted_set_generating_fn(target_set_size):
                     return shift_generator.sample_shift_padchest(

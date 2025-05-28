@@ -79,7 +79,7 @@ def run_mammo(model_to_evaluate, encoder_to_evaluate, shift):
         case "no_shift":
             if encoder_to_evaluate == "simclr_imagenet":
                 print("Start no shift")
-                filename = f"outputs2/mammo_noshift_n{n_boostraps}_{model_id}_{encoder_id}_v{val_size}.csv"
+                filename = f"outputs/mammo_noshift_n{n_boostraps}_{model_id}_{encoder_id}_v{val_size}.csv"
 
                 def shifted_set_generating_fn(target_set_size):
                     return shift_generator.simple_val_sampling_embed_stratified(
@@ -96,7 +96,7 @@ def run_mammo(model_to_evaluate, encoder_to_evaluate, shift):
                 [0.10, 0.20, 0.60, 0.10],
             ]
             for prevalence_shifted in prevalences:
-                filename = f"outputs2/mammo_prev_{prevalence_shifted}_n{n_boostraps}_{model_id}_{encoder_id}_v{val_size}.csv"
+                filename = f"outputs/mammo_prev_{prevalence_shifted}_n{n_boostraps}_{model_id}_{encoder_id}_v{val_size}.csv"
 
                 def shifted_set_generating_fn(target_set_size):
                     return shift_generator.mammo_acq_prev_shift(
@@ -115,7 +115,7 @@ def run_mammo(model_to_evaluate, encoder_to_evaluate, shift):
                 [0.33, 0.02, 0.20, 0.15, 0.20, 0.10],
             ]
             for scanner_shifted in scanner_distributions:
-                filename = f"outputs2/mammo_acq_{scanner_shifted}_n{n_boostraps}_{model_id}_{encoder_id}_v{val_size}.csv"
+                filename = f"outputs/mammo_acq_{scanner_shifted}_n{n_boostraps}_{model_id}_{encoder_id}_v{val_size}.csv"
 
                 def shifted_set_generating_fn(target_set_size):
                     return shift_generator.mammo_acq_prev_shift(
@@ -136,7 +136,7 @@ def run_mammo(model_to_evaluate, encoder_to_evaluate, shift):
             disease_prev = [0.0, 0.5, 0.5, 0.0]
             for scanner_shifted in scanner_distributions:
                 print(scanner_shifted, disease_prev)
-                filename = f"outputs2/mammo_acq_prev_{scanner_shifted}_n{n_boostraps}_{model_id}_{encoder_id}_v{val_size}_prev{disease_prev}.csv"
+                filename = f"outputs/mammo_acq_prev_{scanner_shifted}_n{n_boostraps}_{model_id}_{encoder_id}_v{val_size}_prev{disease_prev}.csv"
 
                 def shifted_set_generating_fn(target_set_size):
                     return shift_generator.mammo_acq_prev_shift(

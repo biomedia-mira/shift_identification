@@ -74,7 +74,7 @@ def run_retina(model_to_evaluate, encoder_to_evaluate, shift):
         case "prevalence":
             print("Start prevalence shift")
             for prevalence_shifted in [0.50, 0.65, 0.78, 1.0]:
-                filename = f"outputs2/retina_prev_{prevalence_shifted}_n{n_boostraps}_{model_id}_{encoder_id}_t{test_sizes}.csv"
+                filename = f"outputs/retina_prev_{prevalence_shifted}_n{n_boostraps}_{model_id}_{encoder_id}_t{test_sizes}.csv"
 
                 def shifted_set_generating_fn(target_set_size):
                     return shift_generator.retina_acq_prev_shift(
@@ -93,7 +93,7 @@ def run_retina(model_to_evaluate, encoder_to_evaluate, shift):
                 [0.20, 0.20, 0.6],
             ]
             for site_shifted in site_distributions:
-                filename = f"outputs2/retina_acq_{site_shifted}_n{n_boostraps}_{model_id}_{encoder_id}_t{test_sizes}.csv"
+                filename = f"outputs/retina_acq_{site_shifted}_n{n_boostraps}_{model_id}_{encoder_id}_t{test_sizes}.csv"
 
                 def shifted_set_generating_fn(target_set_size):
                     return shift_generator.retina_acq_prev_shift(
@@ -114,7 +114,7 @@ def run_retina(model_to_evaluate, encoder_to_evaluate, shift):
                 ]
                 prevalence_shifted = 0.5
                 for site_shifted in site_distributions:
-                    filename = f"outputs2/retina_acq_prev_{site_shifted}_n{n_boostraps}_{model_id}_{encoder_id}_t{test_sizes}.csv"
+                    filename = f"outputs/retina_acq_prev_{site_shifted}_n{n_boostraps}_{model_id}_{encoder_id}_t{test_sizes}.csv"
 
                     def shifted_set_generating_fn(target_set_size):
                         return shift_generator.retina_acq_prev_shift(
@@ -145,7 +145,7 @@ if __name__ == "__main__":
         "/vol/biomedic3/mb121/shift_identification/outputs/run_ve3it5qy/best.ckpt"
     )
     if args.encoder_type == "simclr_modality_specific":
-        encoder_to_evaluate = "/vol/biomedic3/mb121/causal-contrastive/outputs2/run_cwyi1g3d/epoch=449.ckpt"
+        encoder_to_evaluate = "/vol/biomedic3/mb121/causal-contrastive/outputs/run_cwyi1g3d/epoch=449.ckpt"
     elif args.encoder_type == "model":
         encoder_to_evaluate = model_to_evaluate
     else:

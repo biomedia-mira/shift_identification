@@ -77,7 +77,7 @@ def run_rsna(model_to_evaluate, encoder_to_evaluate, shift):
             if encoder_to_evaluate == "simclr_imagenet":
                 print("Start no shift")
                 prevalence_orig = 0.23
-                filename = f"outputs2/rsna_prev_{prevalence_orig}_n{n_boostraps}_{model_id}_{encoder_id}_v{val_sizes[0]}_t{test_sizes}.csv"
+                filename = f"outputs/rsna_prev_{prevalence_orig}_n{n_boostraps}_{model_id}_{encoder_id}_v{val_sizes[0]}_t{test_sizes}.csv"
 
                 def shifted_set_generating_fn(target_set_size):
                     return shift_generator.rsna_prev_shift(
@@ -93,7 +93,7 @@ def run_rsna(model_to_evaluate, encoder_to_evaluate, shift):
             print("Start prevalence shift")
             prevalences = [0.10, 0.5, 0.80]
             for prevalence_shifted in prevalences:
-                filename = f"outputs2/rsna_prev_{prevalence_shifted}_n{n_boostraps}_{model_id}_{encoder_id}_v{val_sizes[0]}_t{test_sizes}.csv"
+                filename = f"outputs/rsna_prev_{prevalence_shifted}_n{n_boostraps}_{model_id}_{encoder_id}_v{val_sizes[0]}_t{test_sizes}.csv"
 
                 def shifted_set_generating_fn(target_set_size):
                     return shift_generator.rsna_prev_shift(
@@ -108,7 +108,7 @@ def run_rsna(model_to_evaluate, encoder_to_evaluate, shift):
             print("Start gender shift")
             female_proportions = [0.25, 0.75, 1.0]
             for female_shifted in female_proportions:
-                filename = f"outputs2/rsna_gender_{female_shifted}_n{n_boostraps}_{model_id}_{encoder_id}_v{val_sizes[0]}_t{test_sizes}.csv"
+                filename = f"outputs/rsna_gender_{female_shifted}_n{n_boostraps}_{model_id}_{encoder_id}_v{val_sizes[0]}_t{test_sizes}.csv"
 
                 def shifted_set_generating_fn(target_set_size):
                     return shift_generator.rsna_gender_shift(
@@ -123,7 +123,7 @@ def run_rsna(model_to_evaluate, encoder_to_evaluate, shift):
             print("Start gender + prev shifts")
             prev_gender_proportions = [(0.1, 0.75), (0.5, 0.75), (0.1, 1.0)]
             for disease_prev, female_shifted in prev_gender_proportions:
-                filename = f"outputs2/rsna_gender_prev_{female_shifted}_n{n_boostraps}_{model_id}_{encoder_id}_prev{disease_prev}_v{val_sizes[0]}_t{test_sizes}.csv"
+                filename = f"outputs/rsna_gender_prev_{female_shifted}_n{n_boostraps}_{model_id}_{encoder_id}_prev{disease_prev}_v{val_sizes[0]}_t{test_sizes}.csv"
 
                 def shifted_set_generating_fn(target_set_size):
                     return shift_generator.rsna_gender_and_prev_shift(
