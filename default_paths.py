@@ -33,7 +33,7 @@ DIABETIC_ROOT = Path("/vol/biodata/data/diabetic_retino")
 
 #### Path for EMBED ####
 # Downlaad https://github.com/Emory-HITI/EMBED_Open_Data/tree/main
-EMBED_ROOT = "/vol/biomedic3/data/EMBED"
+EMBED_ROOT = Path("/vol/biomedic3/data/EMBED")
 
 
 #### Path to pretrained model weights
