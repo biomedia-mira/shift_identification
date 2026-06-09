@@ -87,3 +87,6 @@ Here we detail the full workflow to reproduce all shift identification results f
     
 5. Plot the results with `plot_all_results.ipynb`
 
+## Funding acknowledgements
+
+M.R. was funded by an Imperial College London President’s PhD Scholarship and a Google PhD Fellowship. C.J. was supported by Microsoft Research and EPSRC through the Microsoft PhD Scholarship Programme. B.G. acknowledges support from the Royal Academy of Engineering as part of his Kheiron Medical Technologies/RAEng Research Chair in Safe Deployment of Medical Imaging AI. The project was supported by the European Union's Horizon Europe research and innovation programme under grant agreement 101080302. Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union or HaDEA. Neither the European Union nor the granting authority can be held responsible for them.
