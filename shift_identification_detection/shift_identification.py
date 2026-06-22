@@ -228,7 +228,8 @@ def run_multi_detection_identification(
         df                      Pandas dataframe with results for each tests (column-wise), each row is one
                                 boostrap repetition.
     """
-    res = pd.DataFrame()
+    # Collect results as list of dicts — O(n) instead of quadratic pd.concat
+    results_list = []
     for val_size in val_sizes:
         print(val_size)
         for test_size in tqdm(test_sizes):
@@ -247,9 +248,8 @@ def run_multi_detection_identification(
                 )
                 outputs.update({"n_test": test_size, "boot": i, "val_size": val_size})
                 print(outputs)
-                current = pd.DataFrame(outputs, index=[0])
-                res = pd.concat([res, current], ignore_index=True)
-    return res
+                results_list.append(outputs)
+    return pd.DataFrame(results_list)
 
 
 def resample_reference_set(

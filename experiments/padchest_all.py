@@ -35,13 +35,15 @@ def run_padchest(model_to_evaluate, encoder_to_evaluate, shift):
         df=val_df, transform=torch.nn.Identity(), label_column="pneumonia"
     )
     val_dataloader = DataLoader(
-        val_dataset, batch_size=32, shuffle=False, num_workers=12
+        val_dataset, batch_size=32, shuffle=False, num_workers=12,
+        pin_memory=True, persistent_workers=True, prefetch_factor=3,
     )
     test_dataset = PadChestDataset(
         df=test_df, transform=torch.nn.Identity(), label_column="pneumonia"
     )
     test_dataloader = DataLoader(
-        test_dataset, batch_size=32, shuffle=False, num_workers=12
+        test_dataset, batch_size=32, shuffle=False, num_workers=12,
+        pin_memory=True, persistent_workers=True, prefetch_factor=3,
     )
 
     ### Load model outputs (test + val)

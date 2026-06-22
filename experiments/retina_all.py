@@ -32,11 +32,13 @@ def run_retina(model_to_evaluate, encoder_to_evaluate, shift):
     test_df["idx_in_original"] = np.arange(len(test_df))
     val_dataset = RetinaDataset(df=val_df, transform=torch.nn.Identity())
     val_dataloader = DataLoader(
-        val_dataset, batch_size=32, shuffle=False, num_workers=12
+        val_dataset, batch_size=32, shuffle=False, num_workers=12,
+        pin_memory=True, persistent_workers=True, prefetch_factor=3,
     )
     test_dataset = RetinaDataset(df=test_df, transform=torch.nn.Identity())
     test_dataloader = DataLoader(
-        test_dataset, batch_size=32, shuffle=False, num_workers=12
+        test_dataset, batch_size=32, shuffle=False, num_workers=12,
+        pin_memory=True, persistent_workers=True, prefetch_factor=3,
     )
 
     task_output, encoder_output = get_or_save_outputs(

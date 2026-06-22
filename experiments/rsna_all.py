@@ -34,12 +34,18 @@ def run_rsna(model_to_evaluate, encoder_to_evaluate, shift):
     val_dataset = RNSAPneumoniaDetectionDataset(
         df=val_df, transform=torch.nn.Identity()
     )
-    val_dataloader = DataLoader(val_dataset, batch_size=32, shuffle=False)
+    val_dataloader = DataLoader(
+        val_dataset, batch_size=32, shuffle=False, num_workers=12,
+        pin_memory=True, persistent_workers=True, prefetch_factor=3,
+    )
 
     test_dataset = RNSAPneumoniaDetectionDataset(
         df=test_df, transform=torch.nn.Identity()
     )
-    test_dataloader = DataLoader(test_dataset, batch_size=32, shuffle=False)
+    test_dataloader = DataLoader(
+        test_dataset, batch_size=32, shuffle=False, num_workers=12,
+        pin_memory=True, persistent_workers=True, prefetch_factor=3,
+    )
 
     ### Load model outputs (test + val)
     task_output, encoder_output = get_or_save_outputs(

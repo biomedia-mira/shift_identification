@@ -125,7 +125,7 @@ def get_or_save_outputs(
             probas = []
             encoder_feats = []
             encoder_early_feats = []
-            with torch.no_grad():
+            with torch.inference_mode():
                 for batch in tqdm(loader):
                     x = batch["x"].cuda()
                     y = batch["y"]

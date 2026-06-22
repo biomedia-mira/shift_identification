@@ -102,6 +102,14 @@ def train_model_main(config):
 
         model_module.model.reset_classifier(data_module.num_classes)
 
+    # Compile model for faster training (PyTorch 2.x+)
+    if hasattr(torch, "compile"):
+        try:
+            model_module.model = torch.compile(model_module.model)
+            print("Model compiled with torch.compile for faster training")
+        except Exception as e:
+            print(f"torch.compile failed (falling back to eager mode): {e}")
+
     trainer.fit(model_module, data_module)
 
 

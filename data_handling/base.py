@@ -25,38 +25,49 @@ class BaseDataModuleClass(LightningDataModule):
         self.create_datasets()
 
     def train_dataloader(self):
+        nw = self.config.data.num_workers
+        persistent = nw > 0
         if self.sampler is not None and self.shuffle:
             return DataLoader(
                 self.dataset_train,
-                num_workers=self.config.data.num_workers,
+                num_workers=nw,
                 pin_memory=self.config.data.pin_memory,
-                persistent_workers=False,
+                persistent_workers=persistent,
+                prefetch_factor=3 if nw > 0 else None,
                 batch_sampler=self.sampler,
             )
         return DataLoader(
             self.dataset_train,
             self.config.data.batch_size,
             shuffle=self.shuffle,
-            num_workers=self.config.data.num_workers,
+            num_workers=nw,
             pin_memory=self.config.data.pin_memory,
+            persistent_workers=persistent,
+            prefetch_factor=3 if nw > 0 else None,
         )
 
     def val_dataloader(self):
+        nw = self.config.data.num_workers
         return DataLoader(
             self.dataset_val,
             self.config.data.batch_size,
             shuffle=False,
-            num_workers=self.config.data.num_workers,
+            num_workers=nw,
             pin_memory=self.config.data.pin_memory,
+            persistent_workers=nw > 0,
+            prefetch_factor=3 if nw > 0 else None,
         )
 
     def test_dataloader(self):
+        nw = self.config.data.num_workers
         return DataLoader(
             self.dataset_test,
             self.config.data.batch_size,
             shuffle=False,
-            num_workers=self.config.data.num_workers,
+            num_workers=nw,
             pin_memory=self.config.data.pin_memory,
+            persistent_workers=nw > 0,
+            prefetch_factor=3 if nw > 0 else None,
         )
 
     @property
